@@ -1,43 +1,14 @@
 import 'package:flutter/material.dart';
+//import 'package:gap/gap.dart';
+import 'package:get/get.dart';
+//import 'package:dokun/app/ui/utils/functions.dart';
+import '../../../controllers/dubbing_controller.dart';
+import 'package:dokun/app/routes/route.dart';
+import '../../widgets/tabbar.dart';
+import '../../widgets/projectlist.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'New Project App',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
-        useMaterial3: true,
-      ),
-      home: HomePage(),
-    );
-  }
-}
-
-class HomePage extends StatefulWidget {
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  late TextEditingController searchController;
-
-  @override
-  void initState() {
-    super.initState();
-    searchController = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    searchController.dispose();
-    super.dispose();
-  }
+class DubbingPage extends GetView<DubbingController> {
+  const DubbingPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -46,8 +17,8 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        leading: Icon(Icons.menu, color: Colors.black),
-        actions: [
+        leading: const Icon(Icons.menu, color: Colors.black),
+        actions: const [
           CircleAvatar(
             backgroundImage: NetworkImage(
               'https://placehold.co/40x40?description=A%20profile%20image%20of%20a%20user',
@@ -57,11 +28,11 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: Padding(
-        padding: EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Bienvenue',
               style: TextStyle(
                 fontSize: 24.0,
@@ -69,17 +40,17 @@ class _HomePageState extends State<HomePage> {
                 color: Colors.black,
               ),
             ),
-            SizedBox(height: 8),
-            Text(
+            const SizedBox(height: 8),
+            const Text(
               'Mes projets',
               style: TextStyle(
                 fontSize: 20.0,
                 color: Colors.black,
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             TextField(
-              controller: searchController,
+              //controller: searchController,
               decoration: InputDecoration(
                 hintText: 'Recherche',
                 border: OutlineInputBorder(
@@ -88,32 +59,36 @@ class _HomePageState extends State<HomePage> {
                 ),
                 filled: true,
                 fillColor: Colors.grey[200],
-                prefixIcon: Icon(Icons.search, color: Colors.grey),
+                prefixIcon: const Icon(Icons.search, color: Colors.grey),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             ElevatedButton.icon(
-              onPressed: () {},
-              icon: Icon(Icons.add, color: Colors.white),
-              label: Text('Nouveau projet', style: TextStyle(color: Colors.white)),
+              onPressed: () {
+                Get.toNamed(Routes.editDubbing);
+              },
+              icon: const Icon(Icons.add, color: Colors.white),
+              label: const Text('Nouveau projet',
+                  style: TextStyle(color: Colors.white)),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
-                minimumSize: Size(double.infinity, 50),
+                minimumSize: const Size(double.infinity, 50),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.0),
                 ),
               ),
             ),
-            SizedBox(height: 16),
-            TabBarWidget(),
-            Expanded(child: ProjectListView()),
+            const SizedBox(height: 16),
+            const TabBarWidget(),
+            const Expanded(child: ProjectListView()),
           ],
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: [
+        items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.add_box, size: 40), label: ''),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.add_box, size: 40), label: ''),
           BottomNavigationBarItem(icon: Icon(Icons.location_on), label: ''),
         ],
         selectedItemColor: Colors.green,
@@ -123,65 +98,29 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class TabBarWidget extends StatefulWidget {
-  @override
-  _TabBarWidgetState createState() => _TabBarWidgetState();
-}
 
-class _TabBarWidgetState extends State<TabBarWidget> with SingleTickerProviderStateMixin {
-  late TabController _tabController;
+// class HomePage extends StatefulWidget {
+//   const HomePage({super.key});
 
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: 3, vsync: this);
-  }
+//   @override
+//   // ignore: library_private_types_in_public_api
+//   _HomePageState createState() => _HomePageState();
+// }
 
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
+// class _HomePageState extends State<HomePage> {
+//   late TextEditingController searchController;
 
-  @override
-  Widget build(BuildContext context) {
-    return TabBar(
-      controller: _tabController,
-      labelColor: Colors.black,
-      unselectedLabelColor: Colors.grey,
-      indicatorColor: Colors.green,
-      tabs: [
-        Tab(text: 'Récents'),
-        Tab(text: 'Tout'),
-        Tab(text: 'Nouveau'),
-      ],
-    );
-  }
-}
+//   @override
+//   void initState() {
+//     super.initState();
+//     searchController = TextEditingController();
+//   }
 
-class ProjectListView extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      children: List.generate(3, (index) {
-        return Padding(
-          padding: EdgeInsets.symmetric(vertical: 8.0),
-          child: Card(
-            child: ListTile(
-              leading: Image.network('https://placehold.co/80x80?description=A%20project%20thumbnail%20image'),
-              title: Text('Projet sous-titrage 056', style: TextStyle(color: Colors.black)),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Sous-titrage', style: TextStyle(color: Colors.grey)),
-                  Text('14/05/2024 10:54', style: TextStyle(color: Colors.grey)),
-                ],
-              ),
-              trailing: Icon(Icons.more_vert, color: Colors.grey),
-            ),
-          ),
-        );
-      }),
-    );
-  }
-}
+//   @override
+//   void dispose() {
+//     searchController.dispose();
+//     super.dispose();
+//   }
+
+// }
+

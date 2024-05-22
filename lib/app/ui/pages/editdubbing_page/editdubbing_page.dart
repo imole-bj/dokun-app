@@ -1,23 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../../../controllers/editdubbing_controller.dart';
 
-void main() {
-  runApp(MyApp());
-}
+class EditDubbingPage extends GetView<EditDubbingController> {
+  const EditDubbingPage({super.key});
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: true,
-      ),
-      home: EditorPage(),
-    );
-  }
-}
-
-class EditorPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,8 +27,9 @@ class EditorPage extends StatelessWidget {
               height: 200,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
-                image: DecorationImage(
-                  image: NetworkImage('https://placehold.co/327x184?description=Two%20fishermen%20in%20a%20wooden%20boat%20on%20a%20lake'),
+                image: const DecorationImage(
+                  image: NetworkImage(
+                      'https://placehold.co/327x184?description=Two%20fishermen%20in%20a%20wooden%20boat%20on%20a%20lake'),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -59,17 +47,17 @@ class EditorPage extends StatelessWidget {
                   icon: const Icon(Icons.play_arrow_rounded, size: 40),
                 ),
                 const SizedBox(width: 10),
-                Expanded(
+                const Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
+                      Text(
                         'Notre village est situé au cœur du lac',
                         style: TextStyle(fontSize: 14),
                       ),
-                      const SizedBox(height: 10),
+                      SizedBox(height: 10),
                       Row(
-                        children: const [
+                        children: [
                           Text('00:05', style: TextStyle(fontSize: 12)),
                           Spacer(),
                           Text('00:15', style: TextStyle(fontSize: 12)),
